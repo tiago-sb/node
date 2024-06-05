@@ -1,7 +1,4 @@
-export interface IUser {
-  name: string
-  email: string
-}
+import { IUser } from './IUserService'
 
 const db = [
   {
@@ -21,7 +18,7 @@ export class UserService {
     this.db = dataBase
   }
 
-  public createUser = (name: string, email: string) => {
+  public criarUsuario = (name: string, email: string) => {
     const usuario = {
       name,
       email
@@ -30,8 +27,23 @@ export class UserService {
     this.db.push(usuario)
     console.log('DB atualizado', this.db)
   }
+  
+  deletarUsuario = (id: string) => {
+    const index = this.db.findIndex((user) => {
+      user.email === id
+    })
+
+    if (index == -1) {
+      throw new Error('Usuário nao encontrado no banco')
+    }
+
+    this.db.splice(index, 1)
+    return { message: 'Usuário deletado!' }
+  }
 
   public getAllUsers(){
     return this.db
   }
 }
+
+export { IUser }

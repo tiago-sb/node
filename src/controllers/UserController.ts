@@ -16,7 +16,11 @@ export class UserController {
       return response.status(400).json({ message: 'nome invalido' })
     }
 
-    this.userService.createUser(novoUsuario.name, novoUsuario.email)
+    if (!novoUsuario.email){
+      return response.status(400).json({ message: 'Email obrigatório'})
+    }
+
+    this.userService.criarUsuario(novoUsuario.name, novoUsuario.email)
     return response.status(201).json({ message: 'USUARIO CRIADO' })
   }
 
