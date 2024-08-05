@@ -1,4 +1,4 @@
-import { makeMockResponse } from '../__mock__/mockResponse'
+import { makeMockResponse } from '../__mock__/mockResponse.mock'
 import { UserService } from '../services/UserService'
 import { UserController } from './UserController'
 import { Request } from 'express'

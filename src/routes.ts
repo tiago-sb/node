@@ -1,5 +1,5 @@
 // para trabalhar com as rotas no contexto do backand
-import { Router, Request, Response } from "express";
+import { Router, Request, Response } from 'express';
 import { UserController } from './controllers/UserController'
 import { UserService } from "./services/UserService";
 

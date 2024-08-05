@@ -1,9 +1,15 @@
 // arquivo para as rotas do sistema
+import 'reflect-metadata'
 import express, { Request, Response } from 'express'
 import { router } from './routes'
+import { AppDataSource } from './database'
 
 const server = express()
 
+AppDataSource.initialize()
+  .then(() => {console.log('inicializado com sucesso')})
+  .catch((error) => console.log(error))
+  
 server.use(express.json())
 server.use(router)
 
