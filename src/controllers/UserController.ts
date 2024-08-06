@@ -13,19 +13,22 @@ export class UserController {
     const novoUsuario = request.body
     
     if(!novoUsuario.name){
-      return response.status(400).json({ message: 'nome invalido' })
+      return response.status(400).json({ message: 'nome obrigatório'})
     }
 
     if (!novoUsuario.email){
-      return response.status(400).json({ message: 'Email obrigatório'})
+      return response.status(400).json({ message: 'email obrigatório'})
     }
 
-    this.userService.criarUsuario(novoUsuario.name, novoUsuario.email)
+    if(!novoUsuario.senha){
+      return response.status(400).json({message: 'senha obrigatória'})
+    }
+
+    this.userService.criarUsuario(novoUsuario.name, novoUsuario.email, novoUsuario.senha)
     return response.status(201).json({ message: 'USUARIO CRIADO' })
   }
 
-  public getAllUsers(request: Request, response: Response){
-    const users = this.userService.getAllUsers()
-    return response.status(200).json(users)
+  public getUsers(request: Request, response: Response){
+    return response.status(200)
   }
 }

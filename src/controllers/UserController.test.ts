@@ -3,6 +3,18 @@ import { UserService } from '../services/UserService'
 import { UserController } from './UserController'
 import { Request } from 'express'
 
+const mockUserService = {
+  criarUsuario: jest.fn()
+}
+
+jest.mock('../services/UserService', () => {
+  return {
+    UserService: jest.fn().mockImplementation(() => {
+      return { criarUsuario: jest.fn() }
+    })
+  }
+})
+
 describe('UserController', () => {
   const mockUserService: Partial<UserService> = {
     criarUsuario: jest.fn()
@@ -27,9 +39,9 @@ describe('UserController', () => {
 
   it('Deve retornar erro se o nome do usuario não for informado', () => {
     const mockRequest = {
-        body: {
-            email: 'tiago@gmail.com'
-        }
+      body: {
+        email: 'tiago@gmail.com'
+      }
     } as Request
 
     const mockResponse = makeMockResponse()
@@ -37,14 +49,5 @@ describe('UserController', () => {
     
     expect(mockResponse.state.status).toBe(400)
     expect(mockResponse.state.json).toMatchObject({ message: 'Nome é obrigatório' })
-  })
-
-  it('Deve chamar a função getAllUsers para verificar se ela esta sendo chamada', () => {
-      mockUserService.getAllUsers = jest.fn();
-      userController.getAllUsers({} as Request,
-          { status: jest.fn(), json: jest.fn() } as any,
-      )
-      
-      expect(mockUserService.getAllUsers).toHaveBeenCalled();
   })
 })

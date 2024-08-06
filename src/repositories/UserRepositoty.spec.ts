@@ -8,14 +8,16 @@ describe('UserRepository', () => {
   let managerMock: Partial<EntityManager>
 
   beforeAll(async() => {
-    const mock = await getMockEntityManager({})
+    const mock = await getMockEntityManager({saveReturn: mockUser})
+
     userRepository = new UserRepository(mock as EntityManager)
   })
 
   const mockUser: User = new User('testando','testando@gmail.com','1001')
 
   it('um usuario deve ser cadastrado no db', async() => {
-    await userRepository.createUser(mockUser)
+    const response = await userRepository.createUser(mockUser)
     expect(managerMock.save).toHaveBeenCalled()
+    expect(response).toMatchObject(mockUser)
   })
 })

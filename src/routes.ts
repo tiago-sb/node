@@ -6,11 +6,12 @@ import { UserService } from "./services/UserService";
 const userController = new UserController()
 export const router = Router()
 
+
 // criando um novo usuario 
 router.post('/user', userController.criarUsuario)
 
 // obtendo os dados de todos os usuarios presentes em meu db
-router.get('/user', userController.getAllUsers)
+router.get('/user', userController.getUsers)
 
 // metodo para simular um usuario deletado
 router.delete('/user/:id', async (request: Request, response: Response) => {
