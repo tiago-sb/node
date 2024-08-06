@@ -2,8 +2,10 @@
 import { Router, Request, Response } from 'express';
 import { UserController } from './controllers/UserController'
 import { UserService } from "./services/UserService";
+import { LoginController } from './controllers/LoginController';
 
 const userController = new UserController()
+const loginController = new LoginController()
 export const router = Router()
 
 
@@ -11,7 +13,7 @@ export const router = Router()
 router.post('/user', userController.criarUsuario)
 
 // obtendo os dados de todos os usuarios presentes em meu db
-router.get('/user', userController.getUsers)
+router.get('/user/:user_id', userController.getUsers)
 
 // metodo para simular um usuario deletado
 router.delete('/user/:id', async (request: Request, response: Response) => {
@@ -25,3 +27,5 @@ router.delete('/user/:id', async (request: Request, response: Response) => {
     response.status(500).json({ message: 'Erro ao deletar usuario' })
   }
 })
+
+router.post('/login', loginController.login)

@@ -16,4 +16,8 @@ export class UserRepository {
   getUsuario = async(userId: string): Promise<User | null> => {
     return this.manager.findOne(User, {where: { user_id: userId }})
   }
+
+  getUsuarioEmailSenha = async(nome: string, email: string, senha: string): Promise<User | null> => {
+    return this.manager.findOne(User, {where: { email, senha }})
+  }
 }

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { request, Request, response, Response } from 'express'
 import { UserService } from '../services/UserService'
 
 export class UserController {
@@ -28,7 +28,15 @@ export class UserController {
     return response.status(201).json({ message: 'USUARIO CRIADO' })
   }
 
-  public getUsers(request: Request, response: Response){
-    return response.status(200)
+  public getUsers = async (request: Request, response: Response) => {
+    const {user_id} = request.params
+    const user = await this.userService.getUser(user_id)
+    
+    return response.status(200).json(user)
+  }
+
+  deletarUsuario(request: Request, response: Response){
+    const user = request.body
+    return response.status(200).json({ message: 'deletado' })
   }
 }

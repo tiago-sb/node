@@ -1,3 +1,4 @@
+import { makeMockRequest } from '../__mock__/mockRequest.mock'
 import { makeMockResponse } from '../__mock__/mockResponse.mock'
 import { UserService } from '../services/UserService'
 import { UserController } from './UserController'
@@ -49,5 +50,18 @@ describe('UserController', () => {
     
     expect(mockResponse.state.status).toBe(400)
     expect(mockResponse.state.json).toMatchObject({ message: 'Nome é obrigatório' })
+  })
+
+  it('informe do user_id do usuario', () => {
+    const mockRequest = makeMockRequest({
+      params: {
+        user_id: '1001'
+      }
+    })
+    const mockResponse = makeMockResponse()
+    
+    userController.getUsers(mockRequest, mockResponse)
+    expect(mockUserService.getUser).toHaveBeenCalledWith('1001')
+    expect(mockResponse.state.status).toBe(200)
   })
 })
